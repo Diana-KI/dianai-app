@@ -341,8 +341,14 @@ def admin_overview():
 # --------------------------------------------------
 # 🚀 App starten
 # --------------------------------------------------
-
-if __name__ == '__main__':
-    with app.app_context():
+# 🟣 Für Render: Datenbank beim Start erstellen
+with app.app_context():
+    try:
         db.create_all()
+    except Exception as e:
+        print("Fehler beim Erstellen der DB:", e)
+
+
+# 🟢 Für lokalen Start mit Flask (z. B. python app.py)
+if __name__ == '__main__':
     app.run(debug=True)
