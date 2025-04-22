@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>👩‍💼 Admin-Übersicht: Nutzer, Fragebögen & Sessions</h2>
+
+{% for user in users %}
+  <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 30px;">
+    <h3>👤 {{ user.username }} – {{ user.email }}</h3>
+
+    <!-- Fragebögen -->
+    <h4>📋 Fragebögen:</h4>
+    {% if user.questionnaires %}
+      {% for q in user.questionnaires %}
+        <div style="margin-bottom: 15px;">
+          <strong>Ausgefüllt am:</strong> {{ q.created_at.strftime('%d.%m.%Y %H:%M') }}<br>
+          <ul>
+            {% for key, value in q.responses|tojson|safe|fromjson.items() %}
+              <li><strong>{{ key.replace('_', ' ').capitalize() }}:</strong> {{ value }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p><em>Keine Fragebögen gefunden.</em></p>
+    {% endif %}
+
+    <!-- Sessions -->
+    <h4>🧠 Sessions:</h4>
+    {% if user.sessions %}
+      <ul>
+        {% for s in user.sessions %}
+          <li>
+            {{ s.started_at.strftime('%d.%m.%Y %H:%M') }}
+            – Modell: {{ s.model }}, Stimme: {{ s.voice }}
+            {% if s.ended %} ✅ beendet {% else %} 🔄 läuft {% endif %}
+            <br>
+            <strong>Zusammenfassung:</strong><br>
+            {{ s.summary or "Keine Zusammenfassung vorhanden." }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p><em>Keine Sessions gefunden.</em></p>
+    {% endif %}
+  </div>
+{% endfor %}
+
+{% endblock %}

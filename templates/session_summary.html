@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>📄 Deine Session-Zusammenfassung</h2>
+
+<p>Hier ist eine automatische Zusammenfassung deiner heutigen Sitzung:</p>
+
+<div style="background: #f9f9f9; border: 1px solid #ccc; padding: 20px; margin-top: 20px;">
+  {{ summary }}
+</div>
+
+<br>
+
+<a href="{{ url_for('session_control') }}">
+  <button style="padding: 10px 20px;">➕ Nächste Session starten</button>
+</a>
+
+<a href="{{ url_for('index') }}" style="margin-left: 15px;">
+  <button style="padding: 10px 20px;">🏠 Zurück zur Startseite</button>
+</a>
+
+<a href="{{ url_for('logout') }}" style="margin-left: 15px;">
+  <button style="padding: 10px 20px;">🔚 Für heute beenden</button>
+</a>
+
+{% endblock %}

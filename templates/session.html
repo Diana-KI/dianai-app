@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>🧠 Sessionsteuerung</h2>
+<p>Wähle dein GPT-Modell und die Stimme aus – und starte deine therapeutische Session mit DIANA.</p>
+
+<form method="POST">
+  {{ form.hidden_tag() }}
+
+  <fieldset style="margin-bottom: 20px;">
+    <legend>🤖 GPT-Modell</legend>
+    <label>Welches Modell möchtest du verwenden?</label><br>
+    {{ form.model() }}
+  </fieldset>
+
+  <fieldset style="margin-bottom: 20px;">
+    <legend>🗣️ Stimme</legend>
+    <label>Welche Stimme möchtest du hören?</label><br>
+    {{ form.voice() }}
+  </fieldset>
+
+  <div style="margin-top: 30px;">
+    {{ form.start(class="btn", style="margin-right: 20px;") }}
+    {{ form.end(class="btn") }}
+  </div>
+</form>
+
+<!-- Optional: Freiwilliger Fragebogen-Link -->
+<div style="margin-top: 40px; text-align: center;">
+  <p>Möchtest du den Fragebogen erneut ausfüllen?</p>
+  <a href="{{ url_for('questionnaire') }}">
+    <button style="padding: 10px 20px;">📝 Fragebogen erneut ausfüllen</button>
+  </a>
+</div>
+
+{% endblock %}

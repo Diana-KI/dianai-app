@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>✨ Willkommen zurück, {{ current_user.username }}!</h2>
+<p>Möchtest du eine neue therapeutische Session starten?</p>
+
+<div style="margin-top: 30px;">
+  <a href="{{ url_for('session_control') }}">
+    <button>🧠 Ja, Session starten</button>
+  </a>
+
+  <a href="{{ url_for('index') }}" style="margin-left: 20px;">
+    <button>⏳ Nein, später</button>
+  </a>
+</div>
+
+{% endblock %}

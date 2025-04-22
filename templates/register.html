@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Registrierung</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <label>Benutzername</label>
+    {{ form.username() }}
+    <label>E-Mail-Adresse</label>
+    {{ form.email() }}
+    <label>Passwort</label>
+    {{ form.password() }}
+    <label>Passwort wiederholen</label>
+    {{ form.password2() }}
+    {{ form.submit(value='Registrieren') }}
+</form>
+
+{% if form.errors %}
+  <ul>
+    {% for field, errors in form.errors.items() %}
+      {% for error in errors %}
+        <li style="color: red;">{{ form[field].label.text }}: {{ error }}</li>
+      {% endfor %}
+    {% endfor %}
+  </ul>
+{% endif %}
+
+{% endblock %}

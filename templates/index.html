@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Willkommen bei DIANA</h2>
+
+<p>Schön, dass du wieder da bist. Deine aktuelle Session ist aktiv.</p>
+
+<div id="chatbox" style="border: 1px solid #ccc; padding: 15px; height: 250px; overflow-y: auto; margin-bottom: 20px;">
+  <!-- Hier werden Chat-Nachrichten angezeigt -->
+</div>
+
+<!-- Auswahl GPT-Modell -->
+<label for="model">GPT-Modell:</label>
+<select id="model">
+  <option value="gpt-4-turbo">GPT-4 Turbo</option>
+  <option value="gpt-4.1-mini">GPT-4.1 Mini</option>
+  <option value="o4-mini">O4 Mini</option>
+  <option value="deepseek-chat">DeepSeek (schnell & günstig)</option>
+
+</select>
+
+<!-- Auswahl Stimme -->
+<label for="voice">Stimme:</label>
+<select id="voice">
+  <option value="nova">Nova</option>
+  <option value="shimmer">Shimmer</option>
+  <option value="echo">Echo</option>
+</select>
+
+<!-- Texteingabe -->
+<input type="text" id="userText" placeholder="Deine Nachricht..." style="width: 70%; padding: 10px;">
+<button onclick="sendText()">Absenden</button>
+
+<!-- Spracheingabe -->
+<br><br>
+<button onclick="toggleRecording()" id="recordButton">🎤 Spracheingabe starten</button>
+<button onclick="stopAudio()">🔇 Vorlesen abbrechen</button>
+
+<!-- Sprachausgabe aktivieren -->
+<label style="display: inline-block; margin-top: 10px;">
+  <input type="checkbox" id="tts-toggle" checked>
+  🗣️ Text als Sprache ausgeben
+</label>
+
+<!-- Statusanzeigen -->
+<!-- Statusanzeigen -->
+<div id="mic-status" style="margin-top: 10px; color: darkred;">🎤 Mikrofon: AUS</div>
+<div id="processing" style="margin-top: 10px; display: none;">⏳ Antwort wird verarbeitet...</div>
+
+<!-- Nur EIN Button zur Audio-Umschaltung -->
+<button id="toggle-audio" onclick="toggleAudioEnabled()" style="margin-top: 10px;">🔊 Audio deaktivieren</button>
+
+
+<!-- Sessionsteuerung -->
+<div style="margin-top: 30px;">
+  <a href="{{ url_for('end_session') }}">
+    <button style="padding: 10px 20px;">🔚 Session beenden und speichern</button>
+  </a>
+
+  <a href="{{ url_for('questionnaire') }}" style="margin-left: 15px;">
+    <button style="padding: 10px 20px;">📝 Fragebogen erneut ausfüllen</button>
+  </a>
+</div>
+
+<!-- JS-Datei -->
+<script src="{{ url_for('static', filename='js/audio.js') }}"></script>
+
+<!-- Ladeanzeige -->
+<div id="processing" style="display: none; margin-top: 10px; color: gray;">
+  ⏳ Antwort wird verarbeitet...
+</div>
+
+{% endblock %}

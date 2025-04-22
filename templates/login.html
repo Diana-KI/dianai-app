@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Willkommen bei D.I.A.N.A.</h2>
+<p>
+Ich bin deine digitale intelligente Analysesoftware und Assistentin und helfe dir, die Grundlagen der Dinge aufzulösen, die dir das Leben immer wieder schwer machen.
+</p>
+<p>
+Melde dich gerne an und erhalte deine erste Session gratis. <br>
+(Zukünftig möglich: Login mit Google, Instagram, Amazon und Facebook)
+</p>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <label>Benutzername</label>
+    {{ form.username() }}
+    <label>Passwort</label>
+    {{ form.password() }}
+    {{ form.submit(value='Einloggen') }}
+</form>
+{% endblock %}

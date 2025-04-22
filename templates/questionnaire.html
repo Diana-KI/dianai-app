@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>🧾 Bestandsaufnahme / Fortschrittsfragebogen</h2>
+<p>Bitte beantworte die folgenden Fragen so ehrlich wie möglich.</p>
+
+<form method="POST">
+  {{ form.hidden_tag() }}
+
+  <!-- Soziodemografische Angaben -->
+  <fieldset style="margin-bottom: 25px;">
+    <legend>👤 Persönliche Angaben</legend>
+
+    <label>Geburtsdatum:</label><br>
+    {{ form.birthdate() }}<br><br>
+
+    <label>Geschlecht:</label><br>
+    {{ form.gender() }}<br><br>
+
+    <label>Land, in dem du aufgewachsen bist:</label><br>
+    {{ form.country_origin() }}<br><br>
+
+    <label>Land, in dem du derzeit lebst:</label><br>
+    {{ form.country_current() }}
+  </fieldset>
+
+  <!-- Körperlicher Zustand -->
+  <fieldset style="margin-bottom: 25px;">
+    <legend>🩺 Schmerzen</legend>
+
+    <label>{{ form.pain.label }}</label><br>
+    {{ form.pain(id="pain") }}
+
+    <div id="pain-details" style="display: none; margin-top: 15px;">
+      <label>Kopfschmerzen (0–10):</label> {{ form.pain_kopf(min=0, max=10) }}<br>
+      <label>Rückenschmerzen (0–10):</label> {{ form.pain_ruecken(min=0, max=10) }}<br>
+      <label>Bauchschmerzen (0–10):</label> {{ form.pain_bauch(min=0, max=10) }}<br>
+      <label>Gelenkschmerzen (0–10):</label> {{ form.pain_gelenke(min=0, max=10) }}<br>
+      <label>Muskelschmerzen (0–10):</label> {{ form.pain_muskeln(min=0, max=10) }}<br>
+      <label>Nervenschmerzen (0–10):</label> {{ form.pain_nerven(min=0, max=10) }}<br>
+      <label>Andere Schmerzen:</label> {{ form.pain_andere() }}
+    </div>
+  </fieldset>
+
+  <!-- Psychodiagnostik -->
+  <fieldset style="margin-bottom: 25px;">
+    <legend>🧠 Psychischer Zustand (0–10)</legend>
+
+    <label>Niedergeschlagenheit:</label> {{ form.depression(min=0, max=10) }}<br>
+    <label>Emotionale Taubheit:</label> {{ form.emotionale_taubheit(min=0, max=10) }}<br>
+    <label>Antriebslosigkeit:</label> {{ form.anhedonie(min=0, max=10) }}<br>
+    <label>Zufriedenheit im Alltag:</label> {{ form.zufriedenheit(min=0, max=10) }}<br>
+    <label>Schlafprobleme:</label> {{ form.schlaf(min=0, max=10) }}<br>
+    <label>Innere Unruhe:</label> {{ form.unruhe(min=0, max=10) }}<br>
+    <label>Überforderung:</label> {{ form.ueberforderung(min=0, max=10) }}
+  </fieldset>
+
+  <!-- Trauma -->
+  <fieldset style="margin-bottom: 25px;">
+    <legend>☁️ Belastende Ereignisse</legend>
+
+    <label>Trauma erlebt?</label><br>
+    {{ form.trauma_erlebt(id="trauma_erlebt") }}
+
+    <div id="trauma-details" style="display: none; margin-top: 15px;">
+      <label>Art des Traumas:</label> {{ form.trauma_art() }}<br>
+      <label>Beeinträchtigung durch Erinnerungen:</label> {{ form.trauma_folgen(min=0, max=10) }}
+    </div>
+  </fieldset>
+
+  <!-- Verhalten -->
+  <fieldset style="margin-bottom: 25px;">
+    <legend>🎭 Verhalten & Regulation</legend>
+
+    <label>Essverhalten:</label> {{ form.essverhalten(min=0, max=10) }}<br>
+    <label>Phasen übermäßiger Energie:</label> {{ form.energiephasen(min=0, max=10) }}<br>
+
+    <label>Substanzgebrauch:</label> {{ form.substanznutzung(min=0, max=10, id="substanznutzung") }}
+
+    <div id="substanz-details" style="display: none; margin-top: 10px;">
+      <label>Kontrollverlust?</label><br>
+      {{ form.substanz_kontrollverlust() }}
+    </div>
+
+    <label>Impulsives Verhalten:</label> {{ form.impulsverhalten(min=0, max=10) }}<br>
+    <label>Wutkontrolle:</label> {{ form.wutkontrolle(min=0, max=10, id="wutkontrolle") }}
+
+    <div id="wut-details" style="display: none; margin-top: 10px;">
+      <label>Führt das zu Problemen?</label><br>
+      {{ form.wut_folgen() }}
+    </div>
+  </fieldset>
+
+  <!-- Fokus & Neurodivergenz -->
+  <fieldset style="margin-bottom: 25px;">
+    <legend>🧩 Fokus & Neurodiversität</legend>
+
+    <label>Konzentration / Struktur:</label> {{ form.konzentration(min=0, max=10) }}<br>
+    <label>Neurodivergenz diagnostiziert?</label><br>
+    {{ form.neurodivergenz() }}
+  </fieldset>
+
+  <!-- Emotionales & Support -->
+  <fieldset style="margin-bottom: 25px;">
+    <legend>💬 Unterstützung</legend>
+
+    <label>Trauer oder Verlustschmerz:</label> {{ form.trauer(min=0, max=10) }}<br>
+    <label>Alltags-Stress:</label> {{ form.stress(min=0, max=10) }}<br>
+
+    <label>Psychischer Zustand:</label> {{ form.selbstbewertung() }}<br><br>
+
+    <label>Therapeutische Unterstützung aktuell?</label><br>
+    {{ form.hilfe() }}<br><br>
+
+    <label>Gespräch gewünscht?</label><br>
+    {{ form.gespraech() }}<br><br>
+
+    <label>Was brauchst du gerade?</label><br>
+    {{ form.freitext(rows=4, cols=60) }}
+  </fieldset>
+
+  <!-- Absenden -->
+  <div style="margin-top: 20px;">
+    {{ form.submit(class="btn") }}
+  </div>
+</form>
+
+<!-- 🔧 JavaScript für bedingte Folgefragen -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggleBlock = (triggerId, condition, targetId) => {
+      const trigger = document.getElementById(triggerId);
+      const target = document.getElementById(targetId);
+      if (!trigger || !target) return;
+      trigger.addEventListener('change', () => {
+        const val = trigger.value;
+        target.style.display = condition(val) ? 'block' : 'none';
+      });
+      trigger.dispatchEvent(new Event('change'));
+    };
+
+    toggleBlock('pain', v => v === 'ja', 'pain-details');
+    toggleBlock('trauma_erlebt', v => v === 'ja', 'trauma-details');
+    toggleBlock('substanznutzung', v => parseInt(v) > 3, 'substanz-details');
+    toggleBlock('wutkontrolle', v => parseInt(v) > 3, 'wut-details');
+  });
+</script>
+
+{% endblock %}

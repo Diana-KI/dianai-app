@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>📊 Deine bisherigen Daten</h2>
+
+<!-- Sessions -->
+<h3>🧠 Sitzungen</h3>
+{% if sessions %}
+  <ul>
+    {% for s in sessions %}
+      <li>
+        🗓️ {{ s.started_at.strftime('%d.%m.%Y %H:%M') }}
+        {% if s.ended %} ✅ beendet {% else %} 🔄 aktiv {% endif %}
+        | Modell: {{ s.model }}, Stimme: {{ s.voice }}
+        <br>
+        <strong>Zusammenfassung:</strong><br>
+        {{ s.summary or "Keine Zusammenfassung vorhanden." }}
+        <hr>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>Keine Sessions gefunden.</p>
+{% endif %}
+
+<!-- Fragebögen -->
+<h3>📝 Fragebögen</h3>
+{% if questionnaires %}
+  <ul>
+    {% for q in questionnaires %}
+      <li>
+        📅 Ausgefüllt am {{ q.created_at.strftime('%d.%m.%Y %H:%M') }}
+        <details>
+          <summary>Antworten anzeigen</summary>
+          <pre>{{ q.responses }}</pre>
+        </details>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>Keine Fragebögen gefunden.</p>
+{% endif %}
+
+{% endblock %}
