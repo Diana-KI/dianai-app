@@ -196,7 +196,7 @@ def transcribe_audio():
     audio_file.save(audio_path)
 
     try:
-        client = openai.OpenAI(api_key=app.config["OPENAI_API_KEY"])
+        client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         with open(audio_path, "rb") as audio:
             transcript = client.audio.transcriptions.create(
                 model="whisper-1",
@@ -220,7 +220,7 @@ def chat_response():
     user_input = data.get('user_input')
     current_step = data.get('current_step', '1')
 
-    client = openai.OpenAI(api_key=app.config["OPENAI_API_KEY"])
+    client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
     # 🔧 Parameter dynamisch je nach Modell vorbereiten
     params = {
@@ -263,7 +263,7 @@ def tts_stream():
     voice = data.get('voice', 'nova')
 
     def generate():
-        client = openai.OpenAI(api_key=app.config["OPENAI_API_KEY"])
+        client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         audio_response = client.audio.speech.create(
             model="tts-1",
             voice=voice,
@@ -288,7 +288,7 @@ def end_session():
 
             # GPT-Zusammenfassung
             try:
-                client = openai.OpenAI(api_key=app.config["OPENAI_API_KEY"])
+                client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
                 prompt = "Fasse die wichtigsten Themen dieser Session in 3–10 Sätzen zusammen."
                 gpt_response = client.chat.completions.create(
                     model=session_log.model or "gpt-4-turbo",
