@@ -28,7 +28,8 @@ from models import db, User, SessionLog, QuestionnaireResponse
 app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)
-openai.api_key = app.config["OPENAI_API_KEY"]
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
 
 # Login-Manager
 login_manager = LoginManager()
